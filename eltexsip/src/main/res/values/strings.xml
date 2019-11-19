@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EltexSip</string>
+    <string name="sip_server">SIP Server</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="error_no_data">Введите данные</string>
+</resources>

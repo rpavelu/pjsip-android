@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bindViews();
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SIP_ACCOUNT)) {
-            sipAccount = savedInstanceState.getParcelable(KEY_SIP_ACCOUNT);
-        }
     }
 
     private void bindViews() {

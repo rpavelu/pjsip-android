@@ -5,4 +5,6 @@
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="error_no_data">Введите данные</string>
+    <string name="logged">You are logged!</string>
+    <string name="successful">Successful</string>
 </resources>

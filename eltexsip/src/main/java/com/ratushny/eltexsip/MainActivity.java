@@ -2,10 +2,13 @@ package com.ratushny.eltexsip;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
@@ -23,18 +26,25 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onRegistration(String accountID, pjsip_status_code registrationStateCode) {
             Toast.makeText(MainActivity.this, registrationStateCode.toString(), Toast.LENGTH_SHORT).show();
+            if (registrationStateCode.equals(pjsip_status_code.PJSIP_SC_OK)) {
+                Intent successfulIntent = new Intent(MainActivity.this, SuccessfulStatusActivity.class);
+                startActivity(successfulIntent);
+            }
+            registerButton.setEnabled(true);
+            registerProgress.setVisibility(View.INVISIBLE);
         }
     };
 
     private EditText sipServerEditText;
     private EditText sipUsernameEditText;
     private EditText sipPasswordEditText;
+    private Button registerButton;
+    private ProgressBar registerProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         bindViews();
     }
 
@@ -42,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         sipServerEditText = findViewById(R.id.sipServer);
         sipUsernameEditText = findViewById(R.id.username);
         sipPasswordEditText = findViewById(R.id.password);
+        registerButton = findViewById(R.id.register);
+        registerProgress = findViewById(R.id.registrationProgressBar);
     }
 
     @Override
@@ -64,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
             String sipUsernameText = sipUsernameEditText.getText().toString();
             String sipPasswordText = sipPasswordEditText.getText().toString();
 
-            if (sipServerText.isEmpty()) {
+            if (sipServerText.isEmpty() || sipUsernameText.isEmpty() || sipPasswordText.isEmpty()) {
                 Toast.makeText(MainActivity.this, getString(R.string.error_no_data), Toast.LENGTH_SHORT).show();
             } else {
+                registerButton.setEnabled(false);
+                registerProgress.setVisibility(View.VISIBLE);
                 sipAccount.setHost(sipServerText)
                         .setPort(DEFAULT_SIP_PORT)
                         .setTcpTransport(true)

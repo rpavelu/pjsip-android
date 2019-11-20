@@ -1,6 +1,5 @@
 package com.ratushny.eltexsip;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -17,10 +16,7 @@ import org.pjsip.pjsua2.pjsip_status_code;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String KEY_SIP_ACCOUNT = "sip_account";
     private static final int DEFAULT_SIP_PORT = 5060;
-
-    private SipAccountData sipAccount;
 
     private BroadcastEventReceiver sipEvents = new BroadcastEventReceiver() {
 
@@ -33,12 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText sipServerEditText;
     private EditText sipUsernameEditText;
     private EditText sipPasswordEditText;
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(KEY_SIP_ACCOUNT, sipAccount);
-        super.onSaveInstanceState(outState);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRegister(View view) {
         try {
-            sipAccount = new SipAccountData();
+            SipAccountData sipAccount = new SipAccountData();
 
             String sipServerText = sipServerEditText.getText().toString();
             String sipUsernameText = sipUsernameEditText.getText().toString();
